@@ -1,0 +1,52 @@
+name: gh-pages build
+on:
+  push:
+    branches:
+    - master
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Check out code
+      uses: actions/checkout@v1
+
+    - name: Set up NodeJS
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+
+    - name: yarn install
+      run: yarn install
+
+    - name: nuxt build
+      run: yarn build
+
+    - name: Deploy
+      run: |
+        set -e
+        remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+        remote_branch="gh-pages"
+        rm -rf gh-pages
+        git clone --branch $remote_branch $remote_repo gh-pages
+        pushd gh-pages
+        rm -rf ./*
+        cp -r ../dist/* .
+        echo 'acnh.tbot.app' > CNAME
+        git add --all
+        if [ -z "$(git diff --cached --name-only)" ]; then 
+          # Working directory clean
+          echo "no change, end."
+        else 
+          # Uncommitted changes
+          git config user.email "ci-bot@hitian.info"
+          git config user.name "ci-bot"
+          git commit -m "ci build. [ci skip]"
+          git push origin gh-pages
+          echo "update ok."
+        fi
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
