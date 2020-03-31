@@ -24,7 +24,7 @@ export default {
             this.$auth.loginWith('google')
         },
         onLoginWithApple() {
-
+            alert("正在施工中。。")
         }
     },
 }
