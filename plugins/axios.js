@@ -4,7 +4,7 @@ export default function({ $axios, redirect, store }) {
         if (config.url.substring(0, 7).toLowerCase() === 'http://' || config.url.substring(0, 8).toLowerCase() === 'https://') {
             return;
         }
-        config.baseURL = 'https://acnh-api.tbot.app/';
+        config.baseURL = 'https://acnh-api-origin.hitian.me/';
         let authToken = window.localStorage.getItem("auth_token");
         config.headers.common.AuthToken = authToken;
     });
