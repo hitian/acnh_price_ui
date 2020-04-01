@@ -19,9 +19,9 @@ export default function({ $axios, redirect, store }) {
     });
     $axios.onResponseError(err => {
         console.log("onResponseError", err);
-        if (err.response.status == 403) {
-            alert("登录状态已经失效, 或者没有权限, 请重新登录");
-            redirect('/login');
-        }
+        // if (err.response.status == 403) {
+        //     alert("登录状态已经失效, 或者没有权限, 请重新登录");
+        //     redirect('/login');
+        // }
     });
 }

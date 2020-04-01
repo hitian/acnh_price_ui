@@ -100,11 +100,17 @@ export default {
     methods: {
         async loadUser() {
             try {
-                let {data} = await this.$axios.get('user')
-                console.log(data)
+                let {data, status} = await this.$axios.get('user')
+                console.log(data, status)
                 this.user = data.user;
             }catch(e) {
-                alert('read user failed' + e)
+                console.log(e.response)
+                let status = e.response.status;
+                if (status == 403) {
+                    this.$router.replace('/login/')
+                    return
+                }
+                alert("Error: " + e.response.data)
             }
         },
         async updateUserInfo(evt) {

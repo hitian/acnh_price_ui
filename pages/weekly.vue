@@ -97,8 +97,13 @@ export default {
                 this.price = data.price;
                 this.updateChart();
             }catch(e) {
-                console.error(e)
-                alert('read user failed' + e)
+                console.log(e.response)
+                let status = e.response.status;
+                if (status == 403) {
+                    this.$router.replace('/login/')
+                    return
+                }
+                alert("Error: " + e.response.data)
             }
         },
         updateChart() {

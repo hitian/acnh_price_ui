@@ -43,6 +43,12 @@ export default {
     ],
 
     auth: {
+        redirect: {
+            login: '/login/',
+            logout: '/',
+            callback: '/login/',
+            home: '/'
+        },
         strategies: {
             google: {
                 client_id: '230736846992-7eu125tti33131fqfq42986gqkorghb3.apps.googleusercontent.com'
